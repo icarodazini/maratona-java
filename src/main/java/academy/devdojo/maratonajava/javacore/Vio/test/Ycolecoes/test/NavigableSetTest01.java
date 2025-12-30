@@ -1,7 +1,7 @@
-package academy.devdojo.maratonajava.javacore.Ycolecoes.test;
+package academy.devdojo.maratonajava.javacore.Vio.test.Ycolecoes.test;
 
-import academy.devdojo.maratonajava.javacore.Ycolecoes.dominio.Manga;
-import academy.devdojo.maratonajava.javacore.Ycolecoes.dominio.Smartphone;
+import academy.devdojo.maratonajava.javacore.Vio.test.Ycolecoes.dominio.Smartphone;
+import academy.devdojo.maratonajava.javacore.Vio.test.Ycolecoes.dominio.Manga;
 
 import java.util.Comparator;
 import java.util.NavigableSet;

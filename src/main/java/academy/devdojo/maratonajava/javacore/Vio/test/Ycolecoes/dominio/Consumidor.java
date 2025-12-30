@@ -1,4 +1,4 @@
-package academy.devdojo.maratonajava.javacore.Ycolecoes.dominio;
+package academy.devdojo.maratonajava.javacore.Vio.test.Ycolecoes.dominio;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;

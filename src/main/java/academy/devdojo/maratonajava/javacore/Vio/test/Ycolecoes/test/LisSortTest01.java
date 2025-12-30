@@ -1,6 +1,4 @@
-package academy.devdojo.maratonajava.javacore.Ycolecoes.test;
-
-import academy.devdojo.maratonajava.javacore.Ycolecoes.dominio.Manga;
+package academy.devdojo.maratonajava.javacore.Vio.test.Ycolecoes.test;
 
 import java.util.ArrayList;
 import java.util.Collections;

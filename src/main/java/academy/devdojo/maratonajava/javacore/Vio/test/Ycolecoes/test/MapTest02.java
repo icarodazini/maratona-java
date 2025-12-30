@@ -1,10 +1,9 @@
-package academy.devdojo.maratonajava.javacore.Ycolecoes.test;
+package academy.devdojo.maratonajava.javacore.Vio.test.Ycolecoes.test;
 
-import academy.devdojo.maratonajava.javacore.Ycolecoes.dominio.Consumidor;
-import academy.devdojo.maratonajava.javacore.Ycolecoes.dominio.Manga;
+import academy.devdojo.maratonajava.javacore.Vio.test.Ycolecoes.dominio.Consumidor;
+import academy.devdojo.maratonajava.javacore.Vio.test.Ycolecoes.dominio.Manga;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MapTest02 {
