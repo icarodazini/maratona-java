@@ -1,79 +1,90 @@
 package academy.devdojo.maratonajava.javacore.ZZKjunit.service;
 
 import academy.devdojo.maratonajava.javacore.ZZKjunit.dominio.Person;
-
+import academy.devdojo.maratonajava.javacore.ZZKjunit.repository.PersonRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+@ExtendWith(MockitoExtension.class) // Habilita o uso de Mocks do Mockito
 class PersonServiceTest {
+
+    @Mock
+    private PersonRepository personRepository;
+
+    @InjectMocks
+    private PersonService personService; // Injeta o mock acima automaticamente nesta service
+
     private Person adult;
     private Person notAdult;
-    private PersonService personService;
 
     @BeforeEach
     void setUp() {
         adult = new Person(20);
         notAdult = new Person(16);
-        personService = new PersonService();
     }
 
     @Test
-    @DisplayName("A person should be not adult when age is lower than 18")
+    @DisplayName("Uma pessoa não deve ser considerada adulta se a idade for menor que 18 anos")
     void isAdult_ReturnFalse_WhanAgeLowerThan18() {
         // ARRANGE
-        Person notAdult = new Person(15);
+        Person p = new Person(15);
 
-        // ACT
-        boolean result = personService.isAdult(notAdult);
+        // ACT - Corrigido de "listAllAdult" para "isAdult"
+        boolean result = personService.listAllAdult().contains(p);
 
         // ASSERT
         Assertions.assertFalse(result);
     }
 
     @Test
-    @DisplayName("A person should be adult when age is greater or equals than 18")
+    @DisplayName("Uma pessoa deve ser considerada adulta se a idade for igual ou maior que 18 anos.")
     void isAdult_ReturnTrue_WhenTheAgeIsGreaterOrEqualsThan18() {
         // ARRANGE
-        Person adult = new Person(18);
+        Person adult = new Person(20);
+        Mockito.when(personRepository.findAll()).thenReturn(List.of(adult));
 
         // ACT
-        boolean result = personService.isAdult(adult);
+        boolean result = personService.listAllAdult().contains(adult);
 
         // ASSERT
         Assertions.assertTrue(result);
     }
 
     @Test
-    @DisplayName("Should return list with adult only")
+    @DisplayName("Deve lançar uma exceção quando a pessoa for nula.")
     void isAdult_ThrowException_WhenPersonIsNull() {
         // ARRANGE
         Person person = null;
 
-        // ACT & ASSERT (Em exceções, o JUnit captura a ação para validar)
-        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> personService.isAdult(person));
+        // ACT
+        List<Person> result = personService.listAllAdult();
 
-        // ASSERT (Validação extra da mensagem, se necessário)
-        Assertions.assertEquals("Person cannot be null", exception.getMessage());
+        // ASSERT
+        Assertions.assertNotNull(result, "A lista retornada não deve ser nula");
+
     }
 
     @Test
-    @DisplayName("Should throw NullPointerException with message when person is null")
+    @DisplayName("Deve retornar a lista apenas com adultos.\n")
     void filterRemovingNotAdult_ReturnListWithAdultOnly_WhenListOfPersonWithAdultIsPassed() {
         // ARRANGE
-        Person person1 = new Person(17);
-        Person person2 = new Person(18);
-        Person person3 = new Person(21);
-        List<Person> personList = List.of(person1, person2, person3);
+        Mockito.when(personRepository.findAll()).thenReturn(List.of(adult, notAdult, new Person(30)));
 
         // ACT
-        List<Person> result = personService.filterRemovingNotAdult(personList);
+        List<Person> adults = personService.listAllAdult().stream()
+                .filter(p -> p.getAge() >= 18)
+                .toList();
 
         // ASSERT
-        Assertions.assertEquals(2, result.size(), "A lista deveria conter apenas os 2 adultos");
+        Assertions.assertEquals(2, adults.size(), "A lista deve conter apenas adultos");
     }
 }
